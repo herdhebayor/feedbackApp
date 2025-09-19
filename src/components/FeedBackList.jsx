@@ -5,6 +5,7 @@ import FeedBackItem from './FeedBackItem'
 // import PropTypes from 'prop-types'
 import { motion, AnimatePresence } from 'framer-motion'
 // import { Link } from 'react-router-dom'
+import Spinner from './shared/Spinner'
 
 	//Get global state with the useContext Hook
 import { useContext } from 'react'
@@ -12,12 +13,12 @@ import FeedbackContext from '../context/FeedbackContext'
 
 // function FeedBackList({ feedBack, handleDelete }) {
 function FeedBackList() {
-	const {feedback} = useContext(FeedbackContext)
-	if (!feedback || feedback.length === 0) {
+	const {feedback,isLoading} = useContext(FeedbackContext)
+	if (!isLoading && (!feedback || feedback.length === 0)) {
 		return <p>No Feedback yet!</p>
 	}
 
-	return (
+	return isLoading ? <Spinner/> : (
 		<div className='feedback-list'>
 			<AnimatePresence>
 				{feedback.map((item, index) => (
